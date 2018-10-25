@@ -22,8 +22,8 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
 # wav_in = "solo_d32.wav"
 # wav_in = "solo_d.wav"
 # wav_in = "ciplyatki.wav"
-wav_in = "ciplyatki_04.wav"
-#wav_in = "ciplyatki_noize.wav"
+#wav_in = "ciplyatki_04.wav"
+wav_in = "ciplyatki_noize.wav"
 #wav_in = "ciplyatki32.wav"
 # wav_in = "duo_dn.wav"
 
@@ -46,7 +46,8 @@ frequencies, times, spectrogram = sig.spectrogram(samples, sample_rate)
 formant_spectre = np.zeros(spectrogram.shape[0])
 
 for sample_spectre in np.transpose(spectrogram):
-    formant_spectre += sample_spectre
+    formant_spectre += sample_spectre / np.max(sample_spectre)
+formant_spectre = formant_spectre / spectrogram.shape[0]
 np.save(spectr, formant_spectre)
 # Applying filter ########################################
 # Filter requirements.
@@ -62,7 +63,7 @@ np.save(spectr, formant_spectre)
 #samples_out = butter_lowpass_filter(samples, cutoff, fs, order)
 fil_name = "ht_ciplyatki_04"
 filter_filename = "{}{}{}".format(fil_dir, fil_name, ".npy")
-h_t = np.load(filter_filename)
+h_t = np.load(filter_filename).astype(float)
 H_w = np.fft.fft(h_t)
 
 samples_out = np.convolve(samples, h_t)
@@ -99,7 +100,8 @@ plt.plot(samples_arange_out, samples_out)  # , 'b-')
 # plt.grid()
 # plt.legend()
 plt.subplot(426)
-plt.plot(frequencies, spectrogram_out)
+#plt.plot(frequencies, spectrogram_out)
+plt.plot(spectrogram_out)
 # plt.subplots_adjust(hspace=0.35)
 # plt.show()
 plt.subplot(428)
