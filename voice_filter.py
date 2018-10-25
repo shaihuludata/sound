@@ -7,7 +7,7 @@ fil_dir = "./filters/"
 filename = "ciplyatki_04"
 file_npy = "{}{}{}".format(fil_dir, filename, ".npy")
 H_w = np.load(file_npy)
-h_t = np.fft.ifft(H_w)
+h_t = 2*np.fft.ifft(H_w)
 h_t_out = "{}{}{}{}".format(fil_dir, "ht_", filename, ".npy")
 np.save(h_t_out, h_t)
 
