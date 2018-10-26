@@ -15,7 +15,7 @@ fil_dir = "./filters/"
 
 wav_v_source = "ciplyatki_04.wav"
 # wav_in = "duo_dn.wav"
-wav_v_noise = "ciplyatki_04.wav"
+wav_v_noise = "ciplyatki_vs_taria_04.wav"
 # wav_v_noise = "ciplyatki_circular_04.wav"
 
 v_filename = wav_v_source.split(".")[0]
@@ -46,6 +46,9 @@ frequencies_n_in, times_n, spectrogram_n_in = sig.spectrogram(samples_n_in, samp
 
 # Apply filter ########################################
 samples_n_out = np.convolve(samples_n_in, h_t)
+# samples_n_out = np.convolve(samples_n_out, h_t)
+# samples_n_out = np.convolve(samples_n_out, h_t)
+# samples_n_out = np.convolve(samples_n_out, h_t)
 samples_arange_n_out = np.arange(0, samples_n_out.shape[0]/sample_rate_n, 1/sample_rate_n)
 _, _, spectrogram_n_out = sig.spectrogram(samples_n_out, sample_rate_n)
 
