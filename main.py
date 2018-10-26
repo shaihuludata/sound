@@ -15,7 +15,7 @@ fil_dir = "./filters/"
 wav_v_source = "ciplyatki_04.wav"
 # wav_in = "duo_dn.wav"
 wav_v_noise = "ciplyatki_04.wav"
-#wav_v_noise = "ciplyatki_circular_04.wav"
+# wav_v_noise = "ciplyatki_circular_04.wav"
 
 v_filename = wav_v_source.split(".")[0]
 v_noise_filename = wav_v_noise.split(".")[0]
