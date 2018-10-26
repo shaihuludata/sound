@@ -3,32 +3,33 @@ import matplotlib.pyplot as plt
 import math
 pi = math.pi
 
-fil_dir = "./filters/"
-filename = "ciplyatki_04"
-file_npy = "{}{}{}".format(fil_dir, filename, ".npy")
-H_w = np.load(file_npy)
-h_t = np.fft.ifft(H_w)
-h_t_out = "{}{}{}{}".format(fil_dir, "ht_", filename, ".npy")
-np.save(h_t_out, h_t)
+def export_formant_spectre(spectrogram, npy_spectr):
+    num_of_samples = spectrogram.shape[0]
+    formant_spectre2 = np.zeros(num_of_samples)
+    # for sample_spectre in np.transpose(spectrogram):
+    #     formant_spectre2 += (sample_spectre / np.max(sample_spectre))**2
+    # formant_spectre = np.sqrt(formant_spectre2)/2  # / num_of_samples)
 
-# fs = 44000
-# f_cutoff = 100
-# fc_norm = 2*pi*f_cutoff/fs
-# fil = np.ndarray([0.1, -2, 0.3, -4, 0.5])
-# fil_array = range(-10, 11)
-# fil = list()
-# for t in fil_array:
-#     try:
-#         fil.append(math.sin(fc_norm * t) / (pi * t))
-#     except:
-#         fil.append(fc_norm/pi)
-#fil = [2, 1.8, 1.5, 1, 0.5, 0.2, 0.1, 0.1, 0, 0, 0, 0]
-# H_w = np.fft.fft(fil)
+    for sample_spectre in np.transpose(spectrogram):
+        formant_spectre2 += (sample_spectre / np.max(sample_spectre))
+    formant_spectre = formant_spectre2 / 20 # /num_of_samples
+    np.save(npy_spectr, formant_spectre)
+    return formant_spectre
 
-fig = plt.figure(figsize=(20,10))
-plt.subplot(211)
-plt.plot(h_t)
-plt.subplot(212)
-plt.plot(H_w)
 
-plt.savefig("./filter.png")
+def make_filter_from_voice(fil_dir, filename):
+    file_npy = "{}{}{}".format(fil_dir, filename, ".npy")
+    H_w = np.load(file_npy)
+    h_t = np.fft.ifft(H_w)
+    h_t_out = "{}{}{}{}".format(fil_dir, "ht_", filename, ".npy")
+    np.save(h_t_out, h_t)
+
+    fig = plt.figure(figsize=(20,10))
+    plt.subplot(211)
+    plt.plot(h_t)
+    plt.subplot(212)
+    plt.plot(H_w)
+
+    plt.savefig("./filter.png")
+
+    return h_t_out
