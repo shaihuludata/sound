@@ -9,7 +9,6 @@ def export_formant_spectre(spectrogram, npy_spectr):
     # for sample_spectre in np.transpose(spectrogram):
     #     formant_spectre2 += (sample_spectre / np.max(sample_spectre))**2
     # formant_spectre = np.sqrt(formant_spectre2)/2  # / num_of_samples)
-
     for sample_spectre in np.transpose(spectrogram):
         formant_spectre2 += (sample_spectre / np.max(sample_spectre))
     formant_spectre = formant_spectre2 / 20 # /num_of_samples
