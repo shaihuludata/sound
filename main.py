@@ -4,7 +4,6 @@ from scipy import signal as sig
 from scipy.io import wavfile
 from voice_filter import export_formant_spectre, make_filter_from_voice
 
-
 wav_dir = "./input/"
 res_dir = "./result/"
 fil_dir = "./filters/"
