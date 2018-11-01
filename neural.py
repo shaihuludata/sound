@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 
 def neural_optimization(np_fir_filter: np.ndarray,
@@ -18,20 +19,33 @@ def neural_optimization(np_fir_filter: np.ndarray,
     # метод оптимизации пока пусть будет такой
     optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(loss)
     losses = dict()
-    for i in range(0, 50):
+    for i in range(0, 500):
         with tf.Session() as session:
             tf.global_variables_initializer().run()
             feed_dict = {tf_n_signal: [np_n_signal.reshape(12, 1)],
                          tf_v_signal: [np_v_signal.reshape(12, 1)]}
             _, l = session.run([optimizer, loss], feed_dict=feed_dict)
             losses[l] = tf_fir_filter.eval()
-    print(losses)
-    best_result = list(losses.keys())
-    print()
-    return tf_fir_filter
+        print(i)
+    print([i for i in losses])
+    best_result = min(list(losses.keys()))
+    best = losses[best_result][0].transpose()[0]
+    print(best)
+    return best
+
 
 fir_filter = np.array([0.1, 0.2, 0.5, 0.8, 1.0, 1.0, 0.8, 0.5, 0.2, 0.1, 0.0, 0.0], dtype='float32')
 signal_v = np.array([1.0, 2.0, 3.0, 8.0, 4.0, 2.0, 3.0, 4.0, 6.0, 2.0, 4.0, 6.0], dtype='float32')
 signal_n = np.array([1.0, 2.5, 3.0, 8.0, 4.0, 2.5, 3.0, 4.0, 6.5, 2.0, 4.5, 6.0], dtype='float32')
 
-neural_optimization(fir_filter, signal_v, signal_n)
+best_filter = neural_optimization(fir_filter, signal_v, signal_n)
+out_sig = np.convolve(signal_n, best_filter)
+print(out_sig)
+fig = plt.figure(figsize=(30,10))
+plt.subplot(311)
+plt.plot(signal_v)
+plt.subplot(312)
+plt.plot(signal_n)
+plt.subplot(313)
+plt.plot(out_sig)
+plt.show()
