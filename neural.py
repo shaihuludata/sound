@@ -30,7 +30,6 @@ def neural_optimization(np_fir_filter: np.ndarray,
     print()
     return tf_fir_filter
 
-
 fir_filter = np.array([0.1, 0.2, 0.5, 0.8, 1.0, 1.0, 0.8, 0.5, 0.2, 0.1, 0.0, 0.0], dtype='float32')
 signal_v = np.array([1.0, 2.0, 3.0, 8.0, 4.0, 2.0, 3.0, 4.0, 6.0, 2.0, 4.0, 6.0], dtype='float32')
 signal_n = np.array([1.0, 2.5, 3.0, 8.0, 4.0, 2.5, 3.0, 4.0, 6.5, 2.0, 4.5, 6.0], dtype='float32')
