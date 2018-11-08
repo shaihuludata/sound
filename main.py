@@ -21,9 +21,9 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
 #wav_in = "solo_d_08.wav"
 # wav_in = "solo_d32.wav"
 # wav_in = "solo_d.wav"
-# wav_in = "ciplyatki.wav"
-wav_in = "ciplyatki_04.wav"
-wav_in = "ciplyatki_noize.wav"
+wav_in = "ciplyatki.wav"
+# wav_in = "ciplyatki_04.wav"
+# wav_in = "ciplyatki_noize.wav"
 #wav_in = "ciplyatki32.wav"
 # wav_in = "duo_dn.wav"
 
@@ -62,10 +62,12 @@ np.save(spectr, formant_spectre)
 
 # Filter the data, and plot filtered signals.
 # samples_out = butter_lowpass_filter(samples, cutoff, fs, order)
-fil_name = "ht_ciplyatki_04"
+# fil_name = "ht_ciplyatki_04"
+fil_name = "filter"
 filter_filename = "{}{}{}".format(fil_dir, fil_name, ".npy")
 h_t = np.load(filter_filename).astype(float)
 H_w = np.fft.fft(h_t)
+
 
 samples_out = np.convolve(samples, h_t)
 # samples_out = sig.lfilter(fil, [1], samples)
@@ -109,6 +111,7 @@ plt.subplot(428)
 plt.plot(frequencies, formant_spectre)
 
 plt.savefig(png_in)
-
+print("saved file {}", png_in)
 # Save output wav #########################################
 wavfile.write(wav_out, sample_rate, samples_out)
+print("saved file {}", wav_out)

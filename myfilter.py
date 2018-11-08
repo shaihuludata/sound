@@ -16,7 +16,10 @@ for t in fil_array:
         fil.append(math.sin(fc_norm * t) / (pi * t))
     except:
         fil.append(fc_norm/pi)
-#fil = [2, 1.8, 1.5, 1, 0.5, 0.2, 0.1, 0.1, 0, 0, 0, 0]
+
+print(fil)
+np.save("./filters/filter.npy", fil)
+# fil = [2, 1.8, 1.5, 1, 0.5, 0.2, 0.1, 0.1, 0, 0, 0, 0]
 
 H_w = np.fft.fft(fil)
 
